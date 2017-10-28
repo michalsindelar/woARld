@@ -26,6 +26,10 @@ class Plane: SCNNode {
         planeGeometry.materials = [material]
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func update(with anchor: ARPlaneAnchor) {
         self.planeGeometry.width = CGFloat(anchor.extent.x)
         self.planeGeometry.height = CGFloat(anchor.extent.z)

@@ -12,7 +12,14 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    let config = UserDefaults.standard
+    struct Config {
+        static let autoLighting = true
+        static let castsShadow = true
+        static let planeDetection = true
+        static let objectsOpacity = 0.8
+        static let debugShowsStatistics = true
+        static let debugFeaturePoints = true
+    }
 
     @IBOutlet var sceneView: ARSCNView!
     var planes: [UUID : Plane] = [:]
@@ -25,25 +32,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let objectGeo = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0)
         let objectNode = SCNNode(geometry: objectGeo)
         objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
-        objectNode.castsShadow = config.bool(forKey: "castsShadow")
-        objectNode.opacity = CGFloat(config.float(forKey: "objectsOpacity"))
+        objectNode.castsShadow = Config.castsShadow 
+        
+        objectNode.opacity = CGFloat(Config.objectsOpacity)
 
         return objectNode
     }
 
-    func setDefaultSettings() {
-        config.set(true, forKey: "autoLighting")
-        config.set(true, forKey: "castsShadow")
-        config.set(true, forKey: "planeDetection")
-        config.set(1, forKey: "objectsOpacity")
-
-        // debug
-        config.set(true, forKey: "debugShowsStatistics")
-        config.set(true, forKey: "debugFeaturePoints")
-    }
-
     func setDebugOptions() {
-        if (config.bool(forKey: "debugFeaturePoints")) {
+        if (Config.debugFeaturePoints) {
             self.sceneView.debugOptions = [
                 ARSCNDebugOptions.showWorldOrigin,
                 ARSCNDebugOptions.showFeaturePoints
@@ -60,7 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         setDebugOptions()
 
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = config.bool(forKey: "debugShowsStatistics")
+        sceneView.showsStatistics = Config.debugShowsStatistics
 
 
         // Create a new scene
@@ -78,19 +75,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setDefaultSettings()
         super.viewWillAppear(animated)
 
-        // Create a session configuration
+        // Create a session Configuration
         let configuration = ARWorldTrackingConfiguration()
 
         // TODO: Investigate difference
-        configuration.isLightEstimationEnabled = config.bool(forKey: "autoLighting")
+        configuration.isLightEstimationEnabled = Config.autoLighting
 
-        if (config.bool(forKey: "planeDetection")) {
+        if (Config.planeDetection) {
             configuration.planeDetection = .horizontal
         }
-
 
         // Run the view's session
         sceneView.session.run(configuration)

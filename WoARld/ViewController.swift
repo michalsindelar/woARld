@@ -12,8 +12,10 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet var sceneView: ARSCNView!
     let config = UserDefaults.standard
+
+    @IBOutlet var sceneView: ARSCNView!
+    var planes: [UUID : Plane] = [:]
 
     /**
     Creates simple object
@@ -32,45 +34,63 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func setDefaultSettings() {
         config.set(true, forKey: "autoLighting")
         config.set(true, forKey: "castsShadow")
+        config.set(true, forKey: "planeDetection")
         config.set(1, forKey: "objectsOpacity")
+
+        // debug
+        config.set(true, forKey: "debugShowsStatistics")
+        config.set(true, forKey: "debugFeaturePoints")
+    }
+
+    func setDebugOptions() {
+        if (config.bool(forKey: "debugFeaturePoints")) {
+            self.sceneView.debugOptions = [
+                ARSCNDebugOptions.showWorldOrigin,
+                ARSCNDebugOptions.showFeaturePoints
+            ]
+        }
     }
 
     override func viewDidLoad() {
-
-        setDefaultSettings()
 
         super.viewDidLoad()
 
         // Set the view's delegate
         sceneView.delegate = self
+        setDebugOptions()
 
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = config.bool(forKey: "debugShowsStatistics")
+
 
         // Create a new scene
-
-        // let scene = SCNScene(named: "art.scnassets/ship.scn")!
-
         let scene = SCNScene()
-
+        // let scene = SCNScene(named: "art.scnassets/ship.scn")!
 
         scene.rootNode.addChildNode(createObjectNode())
 
         // TODO: Lightning
         // scene.lightingEnvironment = light cube
 
-        // TODO: Investigate difference
-        self.sceneView.automaticallyUpdatesLighting = config.bool(forKey: "autoLighting");
 
         // Set the scene to the view
         sceneView.scene = scene
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        setDefaultSettings()
         super.viewWillAppear(animated)
 
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+
+        // TODO: Investigate difference
+        configuration.isLightEstimationEnabled = config.bool(forKey: "autoLighting")
+
+        if (config.bool(forKey: "planeDetection")) {
+            configuration.planeDetection = .horizontal
+        }
+
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -90,14 +110,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     // MARK: - ARSCNViewDelegate
 
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
 
-        return node
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+
+        if let anchor = anchor as? ARPlaneAnchor {
+            let plane = Plane(anchor: anchor)
+            node.addChildNode(plane)
+            self.planes[anchor.identifier] = plane
+        }
     }
-*/
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+
+        if let anchor = anchor as? ARPlaneAnchor, let plane = planes[anchor.identifier] {
+            plane.update(with: anchor)
+        }
+
+    }
 
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user

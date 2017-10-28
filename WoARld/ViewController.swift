@@ -13,20 +13,28 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    let config = UserDefaults.standard
 
     /**
     Creates simple object
     @return created SNNode
     */
     func createObjectNode() -> SCNNode {
-        let objectGeo = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.05)
+        let objectGeo = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0)
         let objectNode = SCNNode(geometry: objectGeo)
         objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
 
         return objectNode
     }
 
+    func setDefaultSettings() {
+        config.set(true, forKey: "autoLighting")
+    }
+
     override func viewDidLoad() {
+
+
+
         super.viewDidLoad()
 
         // Set the view's delegate
@@ -41,8 +49,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         let scene = SCNScene()
 
+
         scene.rootNode.addChildNode(createObjectNode())
 
+        // TODO: Lightning
+        // scene.lightingEnvironment = light cube
+
+        // TODO: Investigate difference
+        self.sceneView.automaticallyUpdatesLighting = config.bool(forKey: "autoLighting");
 
         // Set the scene to the view
         sceneView.scene = scene

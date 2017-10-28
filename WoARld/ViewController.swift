@@ -23,17 +23,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let objectGeo = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0)
         let objectNode = SCNNode(geometry: objectGeo)
         objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
+        objectNode.castsShadow = config.bool(forKey: "castsShadow")
+        objectNode.opacity = CGFloat(config.float(forKey: "objectsOpacity"))
 
         return objectNode
     }
 
     func setDefaultSettings() {
         config.set(true, forKey: "autoLighting")
+        config.set(true, forKey: "castsShadow")
+        config.set(1, forKey: "objectsOpacity")
     }
 
     override func viewDidLoad() {
 
-
+        setDefaultSettings()
 
         super.viewDidLoad()
 

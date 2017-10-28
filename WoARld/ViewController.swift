@@ -14,6 +14,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
 
+    /**
+    Creates simple object
+    @return created SNNode
+    */
+    func createObjectNode() -> SCNNode {
+        let objectGeo = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.05)
+        let objectNode = SCNNode(geometry: objectGeo)
+        objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
+
+        return objectNode
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,13 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         let scene = SCNScene()
 
-        // Build object
-
-        let objectGeo = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.05)
-        let objectNode = SCNNode(geometry: objectGeo)
-        objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
-
-        scene.rootNode.addChildNode(objectNode)
+        scene.rootNode.addChildNode(createObjectNode())
 
 
         // Set the scene to the view

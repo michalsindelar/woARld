@@ -15,6 +15,7 @@
 		9073ABFC1FA4B863009CDAF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9073ABFB1FA4B863009CDAF9 /* Assets.xcassets */; };
 		9073ABFF1FA4B863009CDAF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9073ABFD1FA4B863009CDAF9 /* LaunchScreen.storyboard */; };
 		BFF67326A4A3DA291A65D0D1 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF67AC767A344E9DA1DA913 /* Plane.swift */; };
+		BFF675438862901526C58EF8 /* notes in Resources */ = {isa = PBXBuildFile; fileRef = BFF6758EFF07DD0432295660 /* notes */; };
 		BFF67907A7D076BC8F739538 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF67A8F37FA21A9B9F46C27 /* Config.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		9073ABFB1FA4B863009CDAF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9073ABFE1FA4B863009CDAF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9073AC001FA4B863009CDAF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFF6758EFF07DD0432295660 /* notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notes; sourceTree = "<group>"; };
 		BFF67A8F37FA21A9B9F46C27 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		BFF67AC767A344E9DA1DA913 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,9 +74,18 @@
 				904E37011FA621F00002E2B0 /* SettingsTableViewController.swift */,
 				9073AC001FA4B863009CDAF9 /* Info.plist */,
 				BFF67AC767A344E9DA1DA913 /* Plane.swift */,
+				BFF6703F0CA72164F0C4838F /* docs */,
 			);
 			path = WoARld;
 			sourceTree = "<group>";
+		};
+		BFF6703F0CA72164F0C4838F /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				BFF6758EFF07DD0432295660 /* notes */,
+			);
+			path = docs;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -139,6 +150,7 @@
 				9073ABFF1FA4B863009CDAF9 /* LaunchScreen.storyboard in Resources */,
 				9073ABFC1FA4B863009CDAF9 /* Assets.xcassets in Resources */,
 				9073ABFA1FA4B863009CDAF9 /* Main.storyboard in Resources */,
+				BFF675438862901526C58EF8 /* notes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,7 +29,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // materialSettings.lightingModel = SCNMaterial.LightingModel.lambert
         // physicalMaterial.lightingModel = SCNMaterial.LightingModel.phong
 
-        physicalMaterial.lightingModel = SCNMaterial.LightingModel.lambert
+        physicalMaterial.lightingModel = SCNMaterial.LightingModel.physicallyBased
         physicalMaterial.diffuse.contents = UIImage(named: "earth.jpg")
 
         // physicalMaterial.blendMode = SCNBlendMode.alpha
@@ -113,15 +113,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
+    func setupLights() {
+        sceneView.automaticallyUpdatesLighting = false // we'll handle
+
+    }
+
     // MARK: - ARSCNViewDelegate
     func syncWithGlobals() {
+        setupLights()
+
         // Sync with global settings
         if (!Config.debugFeaturePoints) {
             self.sceneView.debugOptions = []
         }
 
         sceneView.session.configuration!.isLightEstimationEnabled = Config.lightEstimation
-
     }
 
 

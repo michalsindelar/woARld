@@ -20,11 +20,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @return created SNNode
     */
     func createObjectNode() -> SCNNode {
-        let objectGeo = SCNBox(width: 0.2, height: 0.2, length: 0.2, chamferRadius: 0)
+        let objectGeo = SCNSphere(radius: 0.3)
+
+
+        let physicalMaterial = SCNMaterial()
+
+        // TODO: Add to settings
+        // materialSettings.lightingModel = SCNMaterial.LightingModel.lambert
+        // physicalMaterial.lightingModel = SCNMaterial.LightingModel.phong
+
+        physicalMaterial.lightingModel = SCNMaterial.LightingModel.lambert
+        physicalMaterial.diffuse.contents = UIImage(named: "earth.jpg")
+
+        // physicalMaterial.blendMode = SCNBlendMode.alpha
+        // SCNMaterialProperty(contents: UIImage())
+
+        objectGeo.materials = [physicalMaterial]
+
+
         let objectNode = SCNNode(geometry: objectGeo)
+
         objectNode.position = SCNVector3(0, 0, -1) // camera in negative z-direction
-        objectNode.castsShadow = Config.castsShadow 
-        
+        objectNode.castsShadow = Config.castsShadow
+
+
         objectNode.opacity = CGFloat(Config.objectsOpacity)
 
         return objectNode

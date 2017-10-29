@@ -95,9 +95,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     // MARK: - ARSCNViewDelegate
+    func syncWithGlobals() {
+        // Sync with global settings
+        if (!Config.debugFeaturePoints) {
+            self.sceneView.debugOptions = []
+        }
+
+        sceneView.session.configuration!.isLightEstimationEnabled = Config.lightEstimation
+
+    }
 
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        syncWithGlobals()
 
         if let anchor = anchor as? ARPlaneAnchor {
             let plane = Plane(anchor: anchor)
@@ -107,7 +117,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
 
-        if let anchor = anchor as? ARPlaneAnchor, let plane = planes[anchor.identifier] {
+        if let anchor = anchor as? ARPlaneAnchor, Config.planeDetection, let plane = planes[anchor.identifier] {
             plane.update(with: anchor)
         }
 

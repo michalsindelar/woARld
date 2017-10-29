@@ -12,15 +12,6 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    struct Config {
-        static let autoLighting = true
-        static let castsShadow = true
-        static let planeDetection = true
-        static let objectsOpacity = 0.8
-        static let debugShowsStatistics = true
-        static let debugFeaturePoints = true
-    }
-
     @IBOutlet var sceneView: ARSCNView!
     var planes: [UUID : Plane] = [:]
 
@@ -81,7 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
 
         // TODO: Investigate difference
-        configuration.isLightEstimationEnabled = Config.autoLighting
+        configuration.isLightEstimationEnabled = Config.lightEstimation
 
         if (Config.planeDetection) {
             configuration.planeDetection = .horizontal

@@ -30,7 +30,7 @@
         <!--Settings-->
         <scene sceneID="PtJ-qN-dBj">
             <objects>
-                <tableViewController title="Settings" id="wj5-MV-EaR" sceneMemberID="viewController">
+                <tableViewController title="Settings" id="wj5-MV-EaR" customClass="SettingsTableViewController" customModule="WoARld" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3th-SE-RcT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -42,7 +42,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f0G-4F-mG8" id="TGl-iC-J3H">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Show Feature Points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0J7-s8-Rp3">
@@ -59,6 +59,7 @@
                                                         <action selector="onChange:" destination="N2q-ga-wdy" eventType="valueChanged" id="v37-0j-f7O"/>
                                                         <action selector="switch:" destination="N2q-ga-wdy" eventType="valueChanged" id="ETc-xJ-QQk"/>
                                                         <action selector="switchButtonChange:" destination="N2q-ga-wdy" eventType="valueChanged" id="fsr-RC-fEj"/>
+                                                        <action selector="switchPressed:forEvent:" destination="wj5-MV-EaR" eventType="valueChanged" id="Vc0-1g-itv"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -68,7 +69,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t2i-nU-uzw" id="GpO-Y2-VZk">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ima-5U-SBt">
@@ -93,7 +94,7 @@
                                         <rect key="frame" x="0.0" y="144" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tfv-98-wel" id="nfR-GE-baT">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gZJ-DP-X6k">
@@ -114,7 +115,7 @@
                                         <rect key="frame" x="0.0" y="188" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bK8-HG-Hp3" id="Fr8-b4-fhe">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Casts Shadow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBH-vb-yOz">
@@ -140,11 +141,17 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="8ZW-nX-oJW"/>
+                    <connections>
+                        <outlet property="castsShadowSwitch" destination="ckk-1k-IBk" id="5Ns-C2-x8g"/>
+                        <outlet property="debugFeaturePointsSwitch" destination="WIU-kY-FrS" id="0VD-eh-lUX"/>
+                        <outlet property="lightEstimationSwitch" destination="gZJ-DP-X6k" id="3C3-YG-WEO"/>
+                        <outlet property="planeDetectionSwitch" destination="ima-5U-SBt" id="yua-Rx-r8u"/>
+                    </connections>
                 </tableViewController>
                 <exit id="N2q-ga-wdy" userLabel="Exit" sceneMemberID="exit"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RSe-7j-0cT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096.875" y="728.87323943661977"/>
+            <point key="canvasLocation" x="1084" y="820"/>
         </scene>
         <!--Item-->
         <scene sceneID="tXr-a1-R10">
